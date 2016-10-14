@@ -1,10 +1,10 @@
 <?php
-	header('Content-Type:text/html; charset=gb2312');//Ê¹ÓÃgb2312±àÂë£¬Ê¹ÖĞÎÄ²»»á±ä³ÉÂÒÂë    
-	// Á¬½Ó£¬Ñ¡ÔñÊı¾İ¿â
+	header('Content-Type:text/html; charset=gb2312');//ä½¿ç”¨gb2312ç¼–ç ï¼Œä½¿ä¸­æ–‡ä¸ä¼šå˜æˆä¹±ç     
+	// è¿æ¥ï¼Œé€‰æ‹©æ•°æ®åº“
 	$dbconn = pg_connect("host=192.16.29.67 port=5432 dbname=mohaoying user=mohaoying password=mohaoying")
 		or die('Could not connect: ' . pg_last_error());
-	//echo "Á¬½Ó³É¹¦£¡£¡£¡£¡£¡/r/n";
-	// Ö´ĞĞ SQL ²éÑ¯
+	//echo "è¿æ¥æˆåŠŸï¼ï¼ï¼ï¼ï¼/r/n";
+	// æ‰§è¡Œ SQL æŸ¥è¯¢
 	$query = 'SELECT * FROM beidou_carnode';
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
@@ -18,9 +18,9 @@
 		$backIndex+=1;
 	}
 	echo json_encode($backValue);
-	// ÊÍ·Å½á¹û¼¯
+	// é‡Šæ”¾ç»“æœé›†
 	pg_free_result($result);
-	// ¹Ø±ÕÁ¬½Ó
+	// å…³é—­è¿æ¥
 	pg_close($dbconn);
  
 
@@ -29,8 +29,8 @@
 <script type="text/javascript">
 function calltree()
 {
-     var my_data="Ç°¶Ë±äÁ¿";
-     //my_data=escape(my_data)+"";//±àÂë£¬·ÀÖ¹ºº×ÖÂÒÂë  unescape(data)½âÂë£¬ÏÔÊ¾ºº×Ö
+     var my_data="å‰ç«¯å˜é‡";
+     //my_data=escape(my_data)+"";//ç¼–ç ï¼Œé˜²æ­¢æ±‰å­—ä¹±ç   unescape(data)è§£ç ï¼Œæ˜¾ç¤ºæ±‰å­—
      $.ajax({
          url: "ajax_php.php",  
          type: "POST",
@@ -39,7 +39,7 @@ function calltree()
          error: function(){  
              alert('Error loading XML document');  
          },  
-         success: function(data,status){//Èç¹ûµ÷ÓÃphp³É¹¦    
+         success: function(data,status){//å¦‚æœè°ƒç”¨phpæˆåŠŸ    
              for(var i=0;i<(data.length);i++){
 				var treedata = "{name:'"+data[i][0]+"',id:'"+data[i][1]+"'}";
 				InsertTreeData(treedata);
