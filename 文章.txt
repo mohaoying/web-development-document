@@ -1,0 +1,58 @@
+<?php
+	header('Content-Type:text/html; charset=gb2312');//使用gb2312编码，使中文不会变成乱码    
+	// 连接，选择数据库
+	$dbconn = pg_connect("host=192.16.29.67 port=5432 dbname=mohaoying user=mohaoying password=mohaoying")
+		or die('Could not connect: ' . pg_last_error());
+	//echo "连接成功！！！！！/r/n";
+	// 执行 SQL 查询
+	$query = 'SELECT * FROM beidou_carnode';
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+	$backValue=array();
+	$backIndex = 0;	
+	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+		$my_data=Array();
+		$my_data[0] = $line["name"];
+		$my_data[1] = $line["id"];
+		$backValue[$backIndex] = $my_data;
+		$backIndex+=1;
+	}
+	echo json_encode($backValue);
+	// 释放结果集
+	pg_free_result($result);
+	// 关闭连接
+	pg_close($dbconn);
+ 
+
+ ?>
+
+<script type="text/javascript">
+function calltree()
+{
+     var my_data="前端变量";
+     //my_data=escape(my_data)+"";//编码，防止汉字乱码  unescape(data)解码，显示汉字
+     $.ajax({
+         url: "ajax_php.php",  
+         type: "POST",
+         data:{trans_data:my_data},
+         dataType: "json",
+         error: function(){  
+             alert('Error loading XML document');  
+         },  
+         success: function(data,status){//如果调用php成功    
+             for(var i=0;i<(data.length);i++){
+				var treedata = "{name:'"+data[i][0]+"',id:'"+data[i][1]+"'}";
+				InsertTreeData(treedata);
+             }
+			if((data.length)>0)
+			{
+				InsertTreeOver();
+			}
+			
+         }
+     });
+}
+setInterval(function() {
+	calltree();
+}, 2000);
+</script>
