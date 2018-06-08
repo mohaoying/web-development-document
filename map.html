@@ -150,13 +150,14 @@
         text:'Chongqing',
         textAlign:'center', // 'left' 'right', 'center',
         verticalAlign:'middle', //middle 、bottom
+	draggable: false,
         cursor:'pointer',
         center: [106.43374,29.829175],
     });
     text.setMap(map);
     var marker = new AMap.Marker({
         position: map.getCenter(),
-        draggable: true,
+        draggable: false,
         cursor: 'move'
     });
     marker.setMap(map);
